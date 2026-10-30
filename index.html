@@ -26,7 +26,7 @@ html, body { margin: 0; background: #FFFFF3; color: #011936; font-family: var(--
 // Minimal stand-in for the Claude dashboard runtime: the page calls dash.data(id), dash.onData(fn),
 // dash.calc(id, {inputs, fn}) and dash.setLink(name). Data comes from data/<id>.json.
 (function () {
-  const IDS = ['races', 'early_vote'];
+  const IDS = ['races', 'early_vote', 'bellwethers'];
   const store = {}; const calcs = {}; const subs = [];
   IDS.forEach((id) => { store[id] = { status: 'loading', data: [] }; });
   const fire = () => subs.forEach((fn) => { try { fn(); } catch (e) { console.error(e); } });
@@ -177,12 +177,14 @@ html, body { margin: 0; background: #FFFFF3; color: #011936; font-family: var(--
 [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
 .pp-fail { display: flex; align-items: center; justify-content: center; gap: var(--cds-gap-sm); color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); min-height: 6rem; grid-column: 1 / -1; }
 .pp-fail::before { content: ""; width: 0.375rem; height: 0.375rem; border-radius: 50%; background: var(--color-bad); }
+.pp-cmp { margin-top: var(--cds-gap-sm); font-size: var(--cds-font-size-caption); }
+.pp-cmp th, .pp-cmp td { padding: 3px 6px; }
 </style>
 
 <div class="pp">
   <nav class="pp-tabs" role="tablist" aria-label="Tracker pages">
     <button id="tab-results" role="tab" aria-selected="true" aria-controls="results-page">Results</button>
-    <button id="tab-early-vote" role="tab" aria-selected="false" aria-controls="early-vote-page">Early vote and mail</button>
+    <button id="tab-bellwethers" role="tab" aria-selected="false" aria-controls="bw-page">Bellwethers</button>
   </nav>
   <div class="pp-page" id="results-page" role="tabpanel">
   <header class="pp-sec" id="summary">
@@ -200,14 +202,14 @@ html, body { margin: 0; background: #FFFFF3; color: #011936; font-family: var(--
     </div>
   </header>
 
-  <section class="pp-sec" id="board">
-    <h2>All 25 at a glance</h2>
-    <div class="pp-board" id="board-grid" data-source="races remaining"></div>
-  </section>
-
   <section class="pp-sec" id="top5">
     <h2>Top 5 in detail</h2>
     <div class="pp-top" id="top5-grid" data-source="races remaining"></div>
+  </section>
+
+  <section class="pp-sec" id="board">
+    <h2>All 25 at a glance</h2>
+    <div class="pp-board" id="board-grid" data-source="races remaining"></div>
   </section>
 
   <section class="pp-sec" id="results">
@@ -235,33 +237,13 @@ html, body { margin: 0; background: #FFFFF3; color: #011936; font-family: var(--
   </section>
 
   </div>
-  <div class="pp-page" id="early-vote-page" role="tabpanel" hidden></div>
-  <template id="ev-template">
-  <section class="pp-sec" id="early-vote">
-    <h2>Early vote and mail ballots</h2>
-    <p class="pp-take dash-skeleton" data-source="ev_summary" data-field="headline" data-row="0">—</p>
-    <p>Ballots reported cast before Election Day, updated each morning from state and county election offices. Party shares are by voter registration, shown only where the state registers by party and publishes returns that way.</p>
-    <div class="pp-card pp-scroll">
-      <table class="pp-tbl" id="ev-table" data-source="early_vote" data-row-key="district">
-        <thead><tr>
-          <th data-field="district">District</th>
-          <th class="r" data-field="total_cast">Ballots cast</th>
-          <th class="r" data-field="mail_returned">Mail returned</th>
-          <th class="r" data-field="early_in_person">Early in person</th>
-          <th class="r" data-field="dem_share">Dem</th>
-          <th class="r" data-field="rep_share">Rep</th>
-          <th class="r" data-field="other_share">Other</th>
-          <th class="r" data-field="dem_minus_rep">D minus R</th>
-          <th class="wide" data-field="party_data">Party data</th>
-          <th class="wide" data-field="geography">Basis</th>
-          <th data-field="as_of">As of</th>
-          <th class="wide" data-field="source">Source</th>
-        </tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
+  <div class="pp-page" id="bw-page" role="tabpanel" hidden>
+  <section class="pp-sec" id="bellwethers">
+    <h2>Bellwether districts</h2>
+    <p>Early-reporting House seats outside our 25 that show which way the night is going. Each is compared with the same district's House race in 2024 and 2022 and the 2024 presidential vote.</p>
+    <div class="pp-top" id="bw-grid" data-source="bellwethers"></div>
   </section>
-  </template>
+  </div>
 </div>
 
 <script>
@@ -281,22 +263,6 @@ dash.calc('remaining', {
     if (remaining > 0 && counted > 0) needs = Math.round(((remaining + (g - o)) / (2 * remaining)) * 1000) / 10;
     return { district: r.district, remaining, basis, needs };
   }),
-});
-
-dash.calc('ev_summary', {
-  inputs: ['early_vote'],
-  title: 'Early vote summary',
-  description: 'Adds up ballots reported cast across the target districts that publish a count, and finds the latest update.',
-  fn: (early_vote) => {
-    const withData = early_vote.filter((r) => r.total_cast != null && r.total_cast !== '');
-    const total = withData.reduce((a, r) => a + Number(r.total_cast), 0);
-    const top = withData.filter((r) => r.group === 'Top 5').reduce((a, r) => a + Number(r.total_cast), 0);
-    const latest = early_vote.reduce((m, r) => (r.as_of && r.as_of > m ? r.as_of : m), '');
-    const headline = withData.length === 0
-      ? 'No early or mail ballot counts pulled yet.'
-      : total.toLocaleString('en-US') + ' ballots reported cast across ' + withData.length + ' of ' + early_vote.length + ' districts, ' + top.toLocaleString('en-US') + ' of them in the Top 5.';
-    return [{ headline, total, top5_total: top, districts_reporting: withData.length, last_update: latest }];
-  },
 });
 
 dash.calc('summary', {
@@ -417,54 +383,78 @@ dash.calc('summary', {
   const board = document.getElementById('board-grid');
   const grid = document.getElementById('top5-grid');
   const tbody = document.querySelector('#results-table tbody');
-  let evBody = null, evTake = null;
   const resultsPage = document.getElementById('results-page');
-  const evPage = document.getElementById('early-vote-page');
-  const tabs = { results: document.getElementById('tab-results'), 'early-vote': document.getElementById('tab-early-vote') };
+  const bwPage = document.getElementById('bw-page');
+  const bwGrid = document.getElementById('bw-grid');
+  const tabs = { results: document.getElementById('tab-results'), bellwethers: document.getElementById('tab-bellwethers') };
   const sumEls = document.querySelectorAll('[data-source="summary"]');
   const show = (name) => {
-    const ev = name === 'early-vote';
-    if (ev && !evPage.firstElementChild) {
-      evPage.append(document.getElementById('ev-template').content.cloneNode(true));
-      evBody = evPage.querySelector('#ev-table tbody');
-      evTake = evPage.querySelector('[data-source="ev_summary"]');
-    }
-    resultsPage.hidden = ev; evPage.hidden = !ev;
-    tabs.results.setAttribute('aria-selected', String(!ev));
-    tabs['early-vote'].setAttribute('aria-selected', String(ev));
-    dash.setLink(ev ? 'early-vote' : 'results');
-    drawEv();
+    const bw = name === 'bellwethers';
+    resultsPage.hidden = bw; bwPage.hidden = !bw;
+    tabs.results.setAttribute('aria-selected', String(!bw));
+    tabs.bellwethers.setAttribute('aria-selected', String(bw));
+    dash.setLink(bw ? 'bellwethers' : 'results');
+    drawBw();
   };
 
-  function drawEv() {
-    if (!evBody || evPage.hidden) return;
-    const es = dash.data('ev_summary');
-    if (es.status === 'ok' && es.data[0]) { evTake.classList.remove('dash-skeleton'); evTake.textContent = es.data[0].headline; } else evTake.textContent = '—';
-    const ev = dash.data('early_vote');
-    if (ev.status !== 'ok') { evBody.replaceChildren(); return; }
-    const erows = ev.data.slice().sort((a, b) => Number(a.order) - Number(b.order));
-    const elastTop = erows.filter((r) => r.group === 'Top 5').length - 1;
-    evBody.replaceChildren(...erows.map((r, i) => {
+  // Bellwether cards: Democrat against Republican, with the same district's 2024 and 2022 House results and 2024 presidential vote
+  const sgn = (v) => (v == null || v === '' ? '—' : (Number(v) > 0 ? 'D+' : Number(v) < 0 ? 'R+' : 'Even ') + Math.abs(Number(v)).toFixed(1));
+  const bwSide = (r) => (r.leader === 'D' ? 'ours' : r.leader === 'R' ? 'gop' : '');
+  const bwCard = (r) => {
+    const bm = (e, field) => mark(e, field, r.district, 'bellwethers');
+    const lead = bwSide(r);
+    const st = r.status === 'Called' ? (lead === 'ours' ? 'won' : 'lost') : (r.status === 'Counting' || r.status === 'Too close to call' ? 'counting' : '');
+    const a = el('article', 'pp-race');
+    a.id = 'bw-' + r.district;
+    if (r.status === 'Called') a.classList.add(lead === 'ours' ? 'called-ours' : 'called-gop');
+    const h = el('div', 'pp-rh');
+    const apOn = r.status === 'Called' && /\bAP\b|Associated Press/i.test(String(r.called_by || ''));
+    const ap = el('span', 'pp-ap' + (apOn ? ' on ' + lead : '')); const bx = el('span', 'box', apOn ? '✓' : ''); ap.append(bx, el('span', 'lbl', apOn ? 'AP call' : 'No AP call'));
+    h.append(bm(el('span', 'dist', r.district)), el('span', 'pp-pill ' + st, r.status === 'Called' && r.winner ? 'Called: ' + r.winner : r.status), ap);
+    a.append(h, bm(el('p', 'pp-parks', r.about), 'about'));
+    const cand = (side, name, party, p, v) => {
+      const row = el('div', 'pp-cand ' + side);
+      const won = r.status === 'Called' && lead === side;
+      const nm = el('span', 'nm');
+      nm.append(bm(el('span', won ? (side === 'ours' ? 'pp-w-ours' : 'pp-w-gop') : null, name), side === 'ours' ? 'dem' : 'rep'), el('small', null, ' (' + party + ')'));
+      row.append(el('span', 'sw'), nm, bm(el('span', 'pct', pct(p)), side === 'ours' ? 'dem_pct' : 'rep_pct'), bm(el('span', 'votes', votes(v)), side === 'ours' ? 'dem_votes' : 'rep_votes'));
+      return row;
+    };
+    a.append(cand('ours', r.dem, 'D', r.dem_pct, r.dem_votes), cand('gop', r.rep, 'R', r.rep_pct, r.rep_votes));
+    const b = el('div', 'pp-bar'); const o = el('span', 'o'); o.style.width = (Number(r.dem_pct) || 0) + '%'; const g = el('span', 'g'); g.style.width = (Number(r.rep_pct) || 0) + '%'; b.append(o, g); a.append(b);
+    // comparison table
+    const t = el('table', 'pp-tbl pp-cmp');
+    const hr = el('tr'); ['', 'Democrat', 'Republican', 'Margin'].forEach((x, k) => hr.append(el('th', k ? 'r' : null, x)));
+    const th = el('thead'); th.append(hr); t.append(th);
+    const tb = el('tbody');
+    const line = (label, dn, dp, rn, rp, mg, fd, fr, fm) => {
       const tr = el('tr');
-      if (i === elastTop) tr.classList.add('top-last');
-      const src = el('td', 'wide');
-      if (r.source_url) { const l = el('a', null, r.source || 'Source'); l.href = r.source_url; l.target = '_blank'; l.rel = 'noopener'; src.append(l); } else src.textContent = r.source || '—';
-      tr.append(
-        el('td', 'dist', r.district),
-        el('td', 'r', n(r.total_cast)),
-        el('td', 'r', n(r.mail_returned)),
-        el('td', 'r', n(r.early_in_person)),
-        el('td', 'r o', pct(r.dem_share)),
-        el('td', 'r g', pct(r.rep_share)),
-        el('td', 'r', pct(r.other_share)),
-        el('td', 'r', r.dem_minus_rep == null || r.dem_minus_rep === '' ? '—' : d3.format('+.1f')(Number(r.dem_minus_rep))),
-        el('td', 'wide muted', r.party_data || '—'),
-        el('td', 'wide muted', r.geography || '—'),
-        el('td', null, shortDate(r.as_of)),
-        src,
-      );
-      return tr;
-    }));
+      tr.append(el('td', 'dist', label),
+        bm(el('td', 'r o', (dn ? last(dn) + ' ' : '') + pct(dp)), fd),
+        bm(el('td', 'r g', (rn ? last(rn) + ' ' : '') + pct(rp)), fr),
+        bm(el('td', 'r', sgn(mg)), fm));
+      tb.append(tr);
+    };
+    line('2026 now', null, r.dem_pct, null, r.rep_pct, r.margin, 'dem_pct', 'rep_pct', 'margin');
+    line('2024 House', r.h24_dem, r.h24_dem_pct, r.h24_rep, r.h24_rep_pct, r.h24_margin, 'h24_dem_pct', 'h24_rep_pct', 'h24_margin');
+    line('2022 House', r.h22_dem, r.h22_dem_pct, r.h22_rep, r.h22_rep_pct, r.h22_margin, 'h22_dem_pct', 'h22_rep_pct', 'h22_margin');
+    line('2024 President', 'Harris', r.p24_dem_pct, 'Trump', r.p24_rep_pct, r.p24_margin, 'p24_dem_pct', 'p24_rep_pct', 'p24_margin');
+    t.append(tb); a.append(t);
+    const f = el('div', 'pp-foot');
+    if (r.margin != null && r.margin !== '' && r.h24_margin != null) f.append(el('span', null, 'Shift from 2024 House: ' + sgn(Number(r.margin) - Number(r.h24_margin))));
+    if (r.reporting != null && r.reporting !== '') f.append(bm(el('span', null, Number(r.reporting).toFixed(0) + '% of expected vote counted'), 'reporting'));
+    else f.append(bm(el('span', null, 'Polls close ' + r.polls_close_et + ' ET'), 'polls_close_et'));
+    if (r.called_by) f.append(bm(el('span', null, 'Call: ' + r.called_by), 'called_by'));
+    if (r.source_url) { const l = el('a', 'pp-link', 'Official results'); l.href = r.source_url; l.target = '_blank'; l.rel = 'noopener'; f.append(l); }
+    if (r.others) f.append(bm(el('span', null, 'Also on ballot: ' + r.others), 'others'));
+    a.append(f);
+    return a;
+  };
+  function drawBw() {
+    if (bwPage.hidden) return;
+    const d = dash.data('bellwethers');
+    if (d.status !== 'ok') { bwGrid.replaceChildren(d.status === 'error' ? el('div', 'pp-fail', 'Failed to load') : el('div')); return; }
+    bwGrid.replaceChildren(...d.data.slice().sort((a, b) => Number(a.order) - Number(b.order)).map(bwCard));
   }
 
   dash.onData(() => {
@@ -510,18 +500,18 @@ dash.calc('summary', {
       }));
     }
 
-    drawEv();
+    drawBw();
   });
 
   tabs.results.addEventListener('click', () => show('results'));
-  tabs['early-vote'].addEventListener('click', () => show('early-vote'));
+  tabs.bellwethers.addEventListener('click', () => show('bellwethers'));
 
   let jumped = false;
   dash.onData(() => {
     if (jumped || dash.data('races').status !== 'ok') return;
     jumped = true;
     const h = location.hash.slice(1);
-    if (h === 'early-vote') { show('early-vote'); return; }
+    if (h === 'bellwethers') { show('bellwethers'); return; }
     const named = document.getElementById(h);
     if (named) named.scrollIntoView();
   });
