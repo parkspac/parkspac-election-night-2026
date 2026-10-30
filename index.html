@@ -475,7 +475,9 @@ dash.calc('summary', {
       const rows = d.data.slice().sort((a, b) => Number(a.order) - Number(b.order));
       const lastTop = rows.filter((r) => r.group === 'Top 5').length - 1;
       board.replaceChildren(...rows.map((r) => tile(r, remBy.get(r.district))));
-      grid.replaceChildren(...rows.filter((r) => r.group === 'Top 5').map((r) => card(r, remBy.get(r.district))));
+      const topRank = ['NC-11','TX-23','MT-01','AZ-06','CA-22'];
+      const rk = (r) => { const i = topRank.indexOf(r.district); return i < 0 ? 99 : i; };
+      grid.replaceChildren(...rows.filter((r) => r.group === 'Top 5').sort((a, b) => rk(a) - rk(b)).map((r) => card(r, remBy.get(r.district))));
       tbody.replaceChildren(...rows.map((r, i) => {
         const m = remBy.get(r.district);
         const tr = el('tr');
