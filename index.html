@@ -26,7 +26,7 @@ html, body { margin: 0; background: #FFFFF3; color: #011936; font-family: var(--
 // Minimal stand-in for the Claude dashboard runtime: the page calls dash.data(id), dash.onData(fn),
 // dash.calc(id, {inputs, fn}) and dash.setLink(name). Data comes from data/<id>.json.
 (function () {
-  const IDS = ['races', 'early_vote', 'bellwethers'];
+  const IDS = ['races', 'early_vote', 'bellwethers', 'ratings'];
   const store = {}; const calcs = {}; const subs = [];
   IDS.forEach((id) => { store[id] = { status: 'loading', data: [] }; });
   const fire = () => subs.forEach((fn) => { try { fn(); } catch (e) { console.error(e); } });
@@ -113,6 +113,7 @@ html, body { margin: 0; background: #FFFFF3; color: #011936; font-family: var(--
 .pp-t .nums { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; font-size: var(--cds-font-size-body); }
 .pp-t .nums .o { color: var(--pp-ours); }
 .pp-t .nums .g { color: var(--pp-gop); }
+.pp-t .odds { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; line-height: 1.3; }
 .pp-t .sub { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pp-mini { display: flex; height: 0.35rem; border-radius: 999px; overflow: hidden; background: var(--pp-track); }
 .pp-mini span { display: block; height: 100%; }
@@ -205,12 +206,12 @@ html, body { margin: 0; background: #FFFFF3; color: #011936; font-family: var(--
 
   <section class="pp-sec" id="top5">
     <h2>Top 5 in detail</h2>
-    <div class="pp-top" id="top5-grid" data-source="races remaining"></div>
+    <div class="pp-top" id="top5-grid" data-source="races remaining ratings"></div>
   </section>
 
   <section class="pp-sec" id="board">
     <h2>All 25 at a glance</h2>
-    <div class="pp-board" id="board-grid" data-source="races remaining"></div>
+    <div class="pp-board" id="board-grid" data-source="races remaining ratings"></div>
   </section>
 
   <section class="pp-sec" id="results">
@@ -222,6 +223,8 @@ html, body { margin: 0; background: #FFFFF3; color: #011936; font-family: var(--
           <th data-field="district">District</th>
           <th data-field="ours">Our candidate</th>
           <th data-field="gop">Republican</th>
+          <th class="r" data-source="ratings" data-field="silver_d">Silver</th>
+          <th data-source="ratings" data-field="cook">Cook</th>
           <th class="r" data-field="ours_pct">Ours</th>
           <th class="r" data-field="gop_pct">GOP</th>
           <th class="r" data-field="margin">Margin</th>
@@ -334,6 +337,8 @@ dash.calc('summary', {
     b.append(o, g); return b;
   };
 
+  let ratBy = new Map();
+  const sbTxt = (q) => (!q || q.silver_d == null || q.silver_d === '' ? '—' : Number(q.silver_d) >= 50 ? 'D ' + Math.round(Number(q.silver_d)) + '%' : 'R ' + Math.round(100 - Number(q.silver_d)) + '%');
   const tile = (r, m) => {
     const t = el('a', 'pp-t');
     t.href = r.group === 'Top 5' ? '#race-' + r.district : '#row-' + r.district;
@@ -349,7 +354,9 @@ dash.calc('summary', {
       subText = '~' + compact(m.remaining) + ' left';
       if (m.needs != null) subText += r.leader === 'gop' ? (m.needs > 100 ? ', out of reach' : ', we need ' + m.needs.toFixed(0) + '%') : (100 - m.needs > 100 ? ', safe' : ', GOP needs ' + (100 - m.needs).toFixed(0) + '%');
     }
+    const q = ratBy.get(r.district);
     t.append(r1, nums, bar('pp-mini', r), el('div', 'sub', subText));
+    if (q) t.append(el('div', 'odds', 'Silver ' + sbTxt(q)), el('div', 'odds', 'Cook ' + (q.cook || '—')));
     return t;
   };
 
@@ -377,6 +384,8 @@ dash.calc('summary', {
     if (r.called_by) f.append(mark(el('span', null, 'Call: ' + r.called_by), 'called_by', r.district));
     if (r.source_url) { const l = el('a', 'pp-link', 'Official results'); l.href = r.source_url; l.target = '_blank'; l.rel = 'noopener'; f.append(l); }
     if (r.others) f.append(mark(el('span', null, 'Also on ballot: ' + r.others), 'others', r.district));
+    const q = ratBy.get(r.district);
+    if (q) f.append(el('span', null, 'Silver Bulletin: ' + sbTxt(q) + ' · Cook: ' + (q.cook || '—')));
     a.append(f);
     return a;
   };
@@ -466,6 +475,8 @@ dash.calc('summary', {
     });
 
     const d = dash.data('races');
+    const rt = dash.data('ratings');
+    ratBy = new Map(rt.status === 'ok' ? rt.data.map((x) => [x.district, x]) : []);
     const rm = dash.data('remaining');
     const remBy = new Map(rm.status === 'ok' ? rm.data.map((x) => [x.district, x]) : []);
     if (d.status !== 'ok') {
@@ -489,6 +500,8 @@ dash.calc('summary', {
           el('td', 'dist', r.district),
           el('td', winCls(r, 'ours') || null, r.ours),
           el('td', winCls(r, 'gop') || null, r.gop),
+          (() => { const td = el('td', 'r', sbTxt(ratBy.get(r.district))); td.style.whiteSpace = 'nowrap'; return td; })(),
+          (() => { const td = el('td', null, (ratBy.get(r.district) || {}).cook || '—'); td.style.whiteSpace = 'nowrap'; return td; })(),
           el('td', 'r o', pct(r.ours_pct)),
           el('td', 'r g', pct(r.gop_pct)),
           el('td', 'r', r.margin == null || r.margin === '' ? '—' : d3.format('+.1f')(Number(r.margin))),

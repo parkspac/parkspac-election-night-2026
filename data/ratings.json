@@ -1,0 +1,177 @@
+[
+ {
+  "district": "NC-11",
+  "cook": "Lean D",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 86.2,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "MT-01",
+  "cook": "Toss Up",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 63.5,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "AZ-06",
+  "cook": "Lean D",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 84.1,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "CA-22",
+  "cook": "Toss Up",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 96.6,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "TX-23",
+  "cook": "Lean R",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 45.8,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "PA-08",
+  "cook": "Lean D",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 85.8,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "PA-10",
+  "cook": "Lean D",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 78.8,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "VA-02",
+  "cook": "Lean D",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 87.1,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "IA-01",
+  "cook": "Lean D",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 81.2,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "NJ-07",
+  "cook": "Lean D",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 88.4,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "NY-17",
+  "cook": "Toss Up",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 88.8,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "PA-07",
+  "cook": "Lean D",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 86.6,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "AK-AL",
+  "cook": "Lean R",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 25.0,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "AZ-02",
+  "cook": "Lean R",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 29.8,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "IA-02",
+  "cook": "Toss Up",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 71.6,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "MN-08",
+  "cook": "Solid R",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 4.3,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "OH-10",
+  "cook": "Lean R",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 26.5,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "VA-01",
+  "cook": "Toss Up",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 60.6,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "CO-03",
+  "cook": "Likely R",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 28.2,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "FL-27",
+  "cook": "Lean R",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 26.3,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "GA-01",
+  "cook": "Solid R",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 2.0,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "MI-04",
+  "cook": "Toss Up",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 67.9,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "NV-02",
+  "cook": "Lean R",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 33.5,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "SC-01",
+  "cook": "Toss Up",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 28.6,
+  "silver_as_of": "2026-11-02"
+ },
+ {
+  "district": "WA-05",
+  "cook": "Likely R",
+  "cook_as_of": "2026-10-30",
+  "silver_d": 11.6,
+  "silver_as_of": "2026-11-02"
+ }
+]
