@@ -28,7 +28,7 @@
   "called_by": "ABC",
   "note": "Early vote 15 to 31 Oct",
   "source_url": "https://er.ncsbe.gov/",
-  "as_of": "2026-11-04T05:56:32+00:00"
+  "as_of": "2026-11-04T11:35:33+00:00"
  },
  {
   "order": 2,
@@ -45,13 +45,13 @@
   "rating": "Lean R",
   "polls_close_et": "10:00 PM",
   "status": "Called",
-  "ours_votes": 100979,
-  "gop_votes": 81327,
-  "other_votes": 5102,
-  "ours_pct": 53.9,
-  "gop_pct": 43.4,
-  "margin": 10.5,
-  "reporting": 69,
+  "ours_votes": 103050,
+  "gop_votes": 86666,
+  "other_votes": 5367,
+  "ours_pct": 52.8,
+  "gop_pct": 44.4,
+  "margin": 8.4,
+  "reporting": 72.07,
   "remaining_reported": null,
   "remaining_source": null,
   "leader": "ours",
@@ -59,7 +59,7 @@
   "called_by": "The Hill / Decision Desk HQ",
   "note": "Flint conceded just after midnight. Later count: Forstag 51.5, Flint 45.7 at 78 percent in. AP has not called",
   "source_url": "https://electionresults.mt.gov/",
-  "as_of": "2026-11-04T02:44:39-05:00"
+  "as_of": "2026-11-04T03:00:00-05:00"
  },
  {
   "order": 3,
@@ -138,12 +138,12 @@
   "rating": "Likely R",
   "polls_close_et": "9:00 PM",
   "status": "Called",
-  "ours_votes": 118191,
-  "gop_votes": 100890,
-  "other_votes": 8520,
-  "ours_pct": 51.9,
-  "gop_pct": 44.3,
-  "margin": 7.6,
+  "ours_votes": 142032,
+  "gop_votes": 119795,
+  "other_votes": 10610,
+  "ours_pct": 52.1,
+  "gop_pct": 44.0,
+  "margin": 8.1,
   "reporting": null,
   "remaining_reported": null,
   "remaining_source": null,
@@ -152,7 +152,7 @@
   "called_by": "AP",
   "note": "Seat vacant since April",
   "source_url": "https://results.texas-election.com/races",
-  "as_of": "2026-11-04T06:23:49+00:00"
+  "as_of": "2026-11-04T15:03:17+00:00"
  },
  {
   "order": 6,
@@ -233,7 +233,7 @@
   "status": "Called",
   "ours_votes": 178696,
   "gop_votes": 150080,
-  "other_votes": 8023,
+  "other_votes": 8018,
   "ours_pct": 53.1,
   "gop_pct": 44.6,
   "margin": 8.5,
@@ -245,7 +245,7 @@
   "called_by": "ABC",
   "note": "",
   "source_url": "https://enr.elections.virginia.gov/",
-  "as_of": "2026-11-04T06:25:26+00:00"
+  "as_of": "2026-11-04T15:07:34+00:00"
  },
  {
   "order": 9,
@@ -479,13 +479,13 @@
   "rating": "Solid R",
   "polls_close_et": "9:00 PM",
   "status": "Called",
-  "ours_votes": 165680,
-  "gop_votes": 186225,
-  "other_votes": 352,
-  "ours_pct": 47.0,
-  "gop_pct": 52.9,
-  "margin": -5.9,
-  "reporting": 93.8,
+  "ours_votes": 168350,
+  "gop_votes": 190743,
+  "other_votes": 359,
+  "ours_pct": 46.8,
+  "gop_pct": 53.1,
+  "margin": -6.3,
+  "reporting": 100.0,
   "remaining_reported": null,
   "remaining_source": null,
   "leader": "gop",
@@ -493,7 +493,7 @@
   "called_by": "AP",
   "note": "Reporting is precincts, Secretary of State",
   "source_url": "https://electionresults.sos.mn.gov/",
-  "as_of": "2026-11-04T01:19:00-06:00"
+  "as_of": "2026-11-04T07:58:21+00:00"
  },
  {
   "order": 17,
@@ -521,7 +521,7 @@
   "remaining_source": null,
   "leader": "ours",
   "winner": "Kristina Knickerbocker",
-  "called_by": "Decision Desk HQ",
+  "called_by": "Columbus Dispatch",
   "note": "AP has not called",
   "source_url": "https://liveresults.ohiosos.gov/",
   "as_of": "2026-11-04T00:10:00-05:00"
@@ -572,13 +572,13 @@
   "rating": "Likely R",
   "polls_close_et": "9:00 PM",
   "status": "Counting",
-  "ours_votes": 134283,
-  "gop_votes": 131277,
-  "other_votes": 8220,
-  "ours_pct": 49.0,
-  "gop_pct": 47.9,
-  "margin": 1.1,
-  "reporting": 73.3,
+  "ours_votes": 137857,
+  "gop_votes": 136644,
+  "other_votes": 8576,
+  "ours_pct": 48.7,
+  "gop_pct": 48.3,
+  "margin": 0.4,
+  "reporting": 70.37,
   "remaining_reported": null,
   "remaining_source": null,
   "leader": "ours",
@@ -586,7 +586,7 @@
   "called_by": null,
   "note": "No newer count found; outstanding ballots not published. Not called",
   "source_url": "https://results.enr.clarityelections.com/CO/",
-  "as_of": "2026-11-04T01:28:00-05:00"
+  "as_of": "2026-11-04T01:17:17-07:00"
  },
  {
   "order": 20,
@@ -597,7 +597,7 @@
   "parks": "Biscayne NP (part)",
   "ours": "Eliott Rodriguez",
   "ours_party": "D",
-  "gop": "María Elvira Salazar",
+  "gop": "Mar\u00eda Elvira Salazar",
   "gop_status": "Incumbent",
   "others": "",
   "rating": "Lean R",
@@ -615,8 +615,8 @@
   "leader": "gop",
   "winner": null,
   "called_by": null,
-  "note": "Precincts reported in; mail, cure and provisional ballots left. Salazar lead is inside the 0.5 percent recount line. Not called",
-  "source_url": "https://results.elections.myflorida.com/",
+  "note": "Salazar ahead by about 1,300 votes; headed for a recount (WLRN).",
+  "source_url": "https://www.wlrn.org/government-politics/2026-11-03/salazar-rodriguez-27th-recount",
   "as_of": "2026-11-04T01:30:00-05:00"
  },
  {
@@ -634,13 +634,13 @@
   "rating": "Solid R",
   "polls_close_et": "7:00 PM",
   "status": "Called",
-  "ours_votes": 129352,
-  "gop_votes": 132957,
+  "ours_votes": 132465,
+  "gop_votes": 140216,
   "other_votes": 0,
-  "ours_pct": 49.3,
-  "gop_pct": 50.7,
-  "margin": -1.4,
-  "reporting": 99,
+  "ours_pct": 48.6,
+  "gop_pct": 51.4,
+  "margin": -2.8,
+  "reporting": null,
   "remaining_reported": null,
   "remaining_source": null,
   "leader": "gop",
@@ -648,7 +648,7 @@
   "called_by": "AP",
   "note": "",
   "source_url": "https://results.sos.ga.gov/",
-  "as_of": "2026-11-04T04:45:05+00:00"
+  "as_of": "2026-11-04T09:24:49+00:00"
  },
  {
   "order": 22,
@@ -677,8 +677,8 @@
   "leader": "gop",
   "winner": null,
   "called_by": null,
-  "note": "Latest full count. Tighter since: Huizenga up about 3,000 of 320,000 at 87 percent in, 5:35 AM. Not called",
-  "source_url": "https://mielections.us/election/results/",
+  "note": "McCann holds a slim lead with about 95% reported (Michigan Public, 9:48 AM ET); AP has not called it. McCann has declared victory.",
+  "source_url": "https://www.michiganpublic.org/politics-government/2026-11-04/mccann-declares-victory-in-close-race-for-michigans-4th-congressional-district",
   "as_of": "2026-11-04T01:57:00-05:00"
  },
  {
@@ -695,7 +695,7 @@
   "others": "Lynn Chapman (IAP)",
   "rating": "Likely R",
   "polls_close_et": "10:00 PM",
-  "status": "Counting",
+  "status": "Called",
   "ours_votes": null,
   "gop_votes": null,
   "other_votes": null,
@@ -705,12 +705,12 @@
   "reporting": null,
   "remaining_reported": null,
   "remaining_source": null,
-  "leader": null,
-  "winner": null,
-  "called_by": null,
-  "note": "Nevada Independent reports Benitez-Thompson won; no AP, network or DDHQ call confirmed and no vote totals readable. Mail counts through 7 Nov",
-  "source_url": "https://silverstateelection.nv.gov/",
-  "as_of": "2026-11-04T08:20:00-05:00"
+  "leader": "ours",
+  "winner": "Teresa Benitez-Thompson",
+  "called_by": "Nevada Independent",
+  "note": "Nevada Independent reports Benitez-Thompson flipped the seat; vote totals not yet posted here.",
+  "source_url": "https://thenevadaindependent.com/article/teresa-benitez-thompson-flips-northern-nevada-house-seat-for-first-time-in-blue-wave",
+  "as_of": "2026-11-04T02:59:00-08:00"
  },
  {
   "order": 24,
@@ -739,7 +739,7 @@
   "leader": "ours",
   "winner": "Nancy Lacore",
   "called_by": "Decision Desk HQ (WCBD)",
-  "note": "All 6 counties in. Margin about 1.01 percent of votes cast; state recount line is 1 percent. AP has not called",
+  "note": "Projected by DDHQ; margin is inside recount range.",
   "source_url": "https://electionresults.sc.gov/",
   "as_of": "2026-11-04T02:12:00-05:00"
  },
