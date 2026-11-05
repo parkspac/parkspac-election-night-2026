@@ -584,7 +584,7 @@
   "leader": "gop",
   "winner": null,
   "called_by": null,
-  "note": "Hurd took the lead, up 1,211. Reporting is AP \"just over 80 percent\" via the Sentinel. KRDO says nearly 60,000 outstanding, no election office named. Next state update by 6 PM ET. Not called",
+  "note": "Vote counts are the 11 AM MT tally, the last with candidate totals. Newer: Hurd up 0.66 points of 304,369 counted about 3 PM MT (Pueblo Chieftain); no candidate totals given. Hurd's lead has grown. No election office estimate of ballots left found; KRDO says nearly 60,000 outstanding, no office named. Not called",
   "source_url": "https://www.gjsentinel.com/hurd-takes-lead-over-romero-in-tight-cd-3-race/article_954deb44-bb0f-417c-b5af-102328ed80fe.html",
   "as_of": "2026-11-04T11:00:00-07:00"
  },
@@ -597,7 +597,7 @@
   "parks": "Biscayne NP (part)",
   "ours": "Eliott Rodriguez",
   "ours_party": "D",
-  "gop": "Mar\u00eda Elvira Salazar",
+  "gop": "María Elvira Salazar",
   "gop_status": "Incumbent",
   "others": "",
   "rating": "Lean R",
@@ -615,7 +615,7 @@
   "leader": "gop",
   "winner": null,
   "called_by": null,
-  "note": "Salazar ahead by 1,116, inside the 0.5 percent recount threshold; count unchanged at 10 AM ET. Recount would not start before 7 Nov. Rodriguez has not conceded; Salazar has declared victory. Not called",
+  "note": "Salazar ahead by 1,116. Miami-Dade Supervisor of Elections puts the margin at 0.46 percent, inside the 0.5 percent recount threshold. Left: 202 vote-by-mail ballots in cure (deadline 5 PM 5 Nov) plus provisionals, count not published, so ballots left stays blank. Canvassing board meets 6 Nov. Recount would not start before 7 Nov. Rodriguez has not conceded; Salazar has declared victory. Not called",
   "source_url": "https://www.nbcmiami.com/elections/florida-midterm-elections-2026-live-updates/3878278/",
   "as_of": "2026-11-04T01:30:00-05:00"
  },
