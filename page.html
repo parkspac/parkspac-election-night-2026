@@ -200,7 +200,8 @@ dash.calc('remaining', {
     else if (rep != null && rep >= 100) { remaining = 0; basis = 'counted'; }
     else if (counted > 0 && rep > 0) { remaining = Math.round(counted / (rep / 100) - counted); basis = 'estimate'; }
     let needs = null;
-    if (remaining > 0 && counted > 0) needs = Math.round(((remaining + (g - o)) / (2 * remaining)) * 1000) / 10;
+    if (r.status === 'Called') { remaining = remaining == null ? null : 0; basis = basis && 'counted'; }
+    if (r.status !== 'Called' && remaining > 0 && counted > 0) needs = Math.round(((remaining + (g - o)) / (2 * remaining)) * 1000) / 10;
     return { district: r.district, remaining, basis, needs };
   }),
 });
